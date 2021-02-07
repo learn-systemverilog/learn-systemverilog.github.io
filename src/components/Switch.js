@@ -12,12 +12,9 @@ const styles = {
 export default function Switch() {
     const [on, setOn] = useState(false);
 
-    return (
-        <div style={styles.switch} onClick={() => { setOn(!on) }}>
-            {on
-                ? <img src={switchOn} />
-                : <img src={switchOff} />
-            }
-        </div>
-    );
+    if (on) {
+        return <img src={switchOn} style={styles.switch} onClick={() => { setOn(!on) }} />;
+    }
+
+    return <img src={switchOff} style={styles.switch} onClick={() => { setOn(!on) }} />;
 }
