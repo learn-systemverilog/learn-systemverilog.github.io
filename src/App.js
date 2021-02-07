@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import MainBoard from './components/MainBoard.js';
 import TopBoard from './components/TopBoard';
+import BottomBoard from './components/BottomBoard';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       </header>
       <MainBoard>
         <TopBoard></TopBoard>
+        <BottomBoard></BottomBoard>
       </MainBoard>
     </div>
   );

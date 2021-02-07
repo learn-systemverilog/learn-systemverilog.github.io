@@ -1,21 +1,21 @@
 import React from 'react';
-import topBoard from './topBoard.png'
+import bottomBoard from './bottomBoard.png'
 
 const styles = {
-    topBoardContainer: {
+    bottomBoardContainer: {
         width: 'fit-content',
         height: 'fit-content',
         margin: '4px',
         borderStyle: 'solid',
-        borderImage: `url(${topBoard}) 2 fill`,
+        borderImage: `url(${bottomBoard}) 2 fill`,
         paddingRight: '2px',
         paddingBottom: '2px',
     }
 };
 
-export default function TopBoard() {
+export default function BottomBoard() {
     return (
-        <div style={styles.topBoardContainer}>
+        <div style={styles.bottomBoardContainer}>
             <p>aaaaaa</p>
             <p>bbbbbbbbbb</p>
             <p>ccccccccccccc</p>

@@ -7,8 +7,8 @@ const styles = {
         height: 'fit-content',
         borderStyle: 'solid',
         borderImage: `url(${mainBoard}) 2 fill`,
-        paddingRight: 2,
-        paddingBottom: 2,
+        paddingRight: '2px',
+        paddingBottom: '2px',
     }
 };
 
