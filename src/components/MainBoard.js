@@ -12,12 +12,10 @@ const styles = {
     }
 };
 
-export default function MainBoard() {
+export default function MainBoard(props) {
     return (
         <div style={styles.mainBoardContainer}>
-            <p>aaaaaa</p>
-            <p>bbbbbbbbbb</p>
-            <p>ccccccccccccc</p>
+            {props.children}
         </div>
     );
 }

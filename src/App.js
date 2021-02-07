@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import MainBoard from './components/MainBoard.js';
+import TopBoard from './components/TopBoard';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
           Learn React
         </a>
       </header>
-      <MainBoard></MainBoard>
+      <MainBoard>
+        <TopBoard></TopBoard>
+      </MainBoard>
     </div>
   );
 }
