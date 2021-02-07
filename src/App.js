@@ -1,8 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import MainBoard from './components/MainBoard.js';
-import TopBoard from './components/TopBoard';
-import BottomBoard from './components/BottomBoard';
+import Board from './components/Board.js';
 
 function App() {
   return (
@@ -21,10 +19,14 @@ function App() {
           Learn React
         </a>
       </header>
-      <MainBoard>
-        <TopBoard></TopBoard>
-        <BottomBoard></BottomBoard>
-      </MainBoard>
+      <Board background="#4285f4" border="#4b45cb">
+        <Board background="#ffc90b" border="#9a5f05">
+          XXXXX XXXXXX XX XXXXXX XXXX
+        </Board>
+        <Board background="#3cdb83" border="#127141">
+          XX XXXX XX XXXXX
+        </Board>
+      </Board>
     </div>
   );
 }
