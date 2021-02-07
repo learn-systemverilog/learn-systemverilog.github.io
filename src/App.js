@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Board from './components/Board.js';
+import Switch from './components/Switch.js';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Board background="#4285f4" border="#4b45cb">
         <Board background="#ffc90b" border="#9a5f05">
           XXXXX XXXXXX XX XXXXXX XXXX
+          <Switch></Switch>
         </Board>
         <Board background="#3cdb83" border="#127141">
           XX XXXX XX XXXXX
