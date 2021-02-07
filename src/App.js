@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
 import Board from './components/Board.js';
 import Switches from './components/Switches';
 
+const styles = {
+  overlay: {
+    height: '100vh',
+    display: 'flex',
+  },
+};
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styles.overlay}>
       <Board background="#4285f4" border="#4b45cb">
         <Board background="#ffc90b" border="#9a5f05">
           <Switches />
