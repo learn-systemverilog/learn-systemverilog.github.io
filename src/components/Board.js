@@ -5,6 +5,8 @@ export default function Board(props) {
         boardContainer: {
             width: 'fit-content',
             height: 'fit-content',
+            margin: 'auto',
+            padding: '8px 8px',
             borderStyle: 'solid',
             borderColor: props.border,
             borderWidth: '1px 4px 4px 1px',

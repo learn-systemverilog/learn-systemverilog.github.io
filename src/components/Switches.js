@@ -3,7 +3,6 @@ import Switch from './Switch.js';
 
 const styles = {
     switches: {
-        margin: '0 12px',
         display: 'flex',
         flexDirection: 'row-reverse',
     }
