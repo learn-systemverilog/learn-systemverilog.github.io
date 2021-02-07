@@ -3,8 +3,8 @@ import Switch from './Switch.js';
 
 const styles = {
     switches: {
-        display: 'flex',
-        flexDirection: 'row-reverse',
+        display: 'grid',
+        gridAutoFlow: 'column',
     }
 };
 
