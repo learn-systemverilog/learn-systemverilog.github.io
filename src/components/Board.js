@@ -3,11 +3,9 @@ import React from 'react';
 export default function Board(props) {
     const styles = {
         boardContainer: {
-            height: 'fit-content',
             display: 'grid',
-            padding: '8px 8px',
             gridGap: '8px',
-            alignItems: 'center',
+            padding: '8px 8px',
             borderStyle: 'solid',
             borderColor: props.border,
             borderWidth: '1px 4px 4px 1px',
