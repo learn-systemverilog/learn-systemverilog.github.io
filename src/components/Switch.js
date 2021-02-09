@@ -9,12 +9,17 @@ const styles = {
     }
 };
 
-export default function Switch() {
+export default function Switch(props) {
     const [on, setOn] = useState(false);
 
-    if (on) {
-        return <img src={switchOn} style={styles.switch} onClick={() => { setOn(!on) }} />;
+    function setOnWrapper(on) {
+        setOn(on);
+        props.onSwitch(on, props.index);
     }
 
-    return <img src={switchOff} style={styles.switch} onClick={() => { setOn(!on) }} />;
+    if (on) {
+        return <img src={switchOn} style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
+    }
+
+    return <img src={switchOff} style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
 }
