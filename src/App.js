@@ -13,7 +13,12 @@ const styles = {
   },
   inner: {
     margin: 'auto',
-  }
+  },
+  learnSystemVerilog: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: "'Roboto Mono', monospace",
+  },
 };
 
 function App() {
@@ -32,6 +37,11 @@ function App() {
             <Switches swi={swi} setSwi={setSwi} />
           </Board>
           <Leds led={led} />
+          <h1 style={styles.learnSystemVerilog}>
+            Learn
+            <br />
+            SystemVerilog
+          </h1>
           <Board background="#3cdb83" border="#127141">
             <img src={lcd} />
           </Board>
