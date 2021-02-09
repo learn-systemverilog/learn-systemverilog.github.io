@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ledOn from './ledOn.png';
 import ledOff from './ledOff.png';
 
@@ -8,10 +8,8 @@ const styles = {
     }
 };
 
-export default function Led() {
-    const [on, setOn] = useState(false);
-
-    if (on) {
+export default function Led(props) {
+    if (props.on) {
         return <img src={ledOn} style={styles.led} />;
     }
 

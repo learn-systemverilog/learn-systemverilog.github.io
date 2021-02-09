@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Board from './components/Board.js';
 import Switches from './components/Switches';
 import Leds from './components/Leds';
@@ -15,6 +16,14 @@ const styles = {
 };
 
 function App() {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(time + 1);
+    }, 1000);
+  });
+
   return (
     <div style={styles.overlay}>
       <div style={styles.inner}>
@@ -22,7 +31,7 @@ function App() {
           <Board background="#ffc90b" border="#9a5f05">
             <Switches />
           </Board>
-          <Leds />
+          <Leds led={time} />
           <Board background="#3cdb83" border="#127141">
             XX XXXX XX XXXXX
         </Board>
