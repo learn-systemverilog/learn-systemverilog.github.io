@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Board from './components/Board.js';
 import Switches from './components/Switches';
 import Leds from './components/Leds';
+import lcd from './components/lcd.png';
 
 const styles = {
   overlay: {
@@ -32,8 +33,8 @@ function App() {
           </Board>
           <Leds led={led} />
           <Board background="#3cdb83" border="#127141">
-            XX XXXX XX XXXXX
-        </Board>
+            <img src={lcd} />
+          </Board>
         </Board>
       </div>
     </div>
