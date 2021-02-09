@@ -16,22 +16,21 @@ const styles = {
 };
 
 function App() {
-  const [time, setTime] = useState(0);
+  const [led, setLed] = useState(0);
+  const [swi, setSwi] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      setTime(time + 1);
-    }, 1000);
-  });
+    setLed(swi);
+  }, [swi]);
 
   return (
     <div style={styles.overlay}>
       <div style={styles.inner}>
         <Board background="#4285f4" border="#4b45cb">
           <Board background="#ffc90b" border="#9a5f05">
-            <Switches />
+            <Switches swi={swi} setSwi={setSwi} />
           </Board>
-          <Leds led={time} />
+          <Leds led={led} />
           <Board background="#3cdb83" border="#127141">
             XX XXXX XX XXXXX
         </Board>

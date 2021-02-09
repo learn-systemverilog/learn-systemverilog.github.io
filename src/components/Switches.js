@@ -8,22 +8,15 @@ const styles = {
     }
 };
 
-export default function Switches() {
-    const [swi, setSwi] = useState(0);
-
+export default function Switches(props) {
     function onSwitch(on, index) {
-        console.log(on, index);
         const diff = 2 ** index;
         if (on) {
-            setSwi(swi + diff);
+            props.setSwi(props.swi + diff);
         } else {
-            setSwi(swi - diff);
+            props.setSwi(props.swi - diff);
         }
     }
-
-    useEffect(() => {
-        console.log(swi);
-    }, [swi]);
 
     return (
         <div style={styles.switches}>
