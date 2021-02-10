@@ -4,6 +4,8 @@ import Switches from './components/Switches';
 import Leds from './components/Leds';
 import lcd from './components/lcd.png';
 
+import Module from './simulator.js'
+
 const styles = {
   overlay: {
     width: '100wh',
@@ -24,9 +26,36 @@ const styles = {
 function App() {
   const [led, setLed] = useState(0);
   const [swi, setSwi] = useState(0);
+  const [clk, setClk] = useState(false);
+
+  const [module, setModule] = useState(null);
 
   useEffect(() => {
-    setLed(swi);
+    new Module().then(module => {
+      setModule(module);
+    });
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setClk(!clk)
+    }, 1000);
+
+    if (module === null) {
+      return;
+    }
+
+    const simulation = JSON.parse(module.simulate(swi, clk));
+    setLed(simulation.led);
+  }, [clk]);
+
+  useEffect(() => {
+    if (module === null) {
+      return;
+    }
+
+    const simulation = JSON.parse(module.simulate(swi, clk));
+    setLed(simulation.led);
   }, [swi]);
 
   return (
