@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Board from './components/Board.js';
 import Switches from './components/Switches';
 import Leds from './components/Leds';
+import SegmentsDisplay from "./components/SegmentsDisplay.js";
 import lcd from './components/lcd.png';
 
 import Module from './simulator.js'
-import SegmentsDisplay from "./components/SegmentsDisplay.js";
 
 const styles = {
   overlay: {
