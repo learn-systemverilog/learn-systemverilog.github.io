@@ -5,6 +5,7 @@ const styles = {
     switches: {
         display: 'grid',
         gridAutoFlow: 'column',
+        justifyItems: 'center',
     }
 };
 
