@@ -23,7 +23,7 @@ export default function Leds(props) {
         }
 
         setLed(arr);
-    }, [props.led])
+    }, [props.led]);
 
     return (
         <div style={styles.leds}>
