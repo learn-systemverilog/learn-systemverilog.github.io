@@ -5,6 +5,7 @@ import Leds from './components/Leds';
 import lcd from './components/lcd.png';
 
 import Module from './simulator.js'
+import SegmentsDisplay from "./components/SegmentsDisplay.js";
 
 const styles = {
   overlay: {
@@ -63,6 +64,7 @@ function App() {
       <div style={styles.inner}>
         <Board background="#4285f4" border="#4b45cb">
           <Board background="#ffc90b" border="#9a5f05">
+            <SegmentsDisplay></SegmentsDisplay>
             <Switches swi={swi} setSwi={setSwi} />
           </Board>
           <Leds led={led} />
