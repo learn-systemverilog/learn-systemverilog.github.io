@@ -26,6 +26,7 @@ const styles = {
 
 function App() {
   const [led, setLed] = useState(0);
+  const [seg, setSeg] = useState(0);
   const [swi, setSwi] = useState(0);
   const [clk, setClk] = useState(false);
 
@@ -48,6 +49,7 @@ function App() {
 
     const simulation = JSON.parse(module.simulate(swi, clk));
     setLed(simulation.led);
+    setSeg(simulation.seg);
   }, [clk]);
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function App() {
 
     const simulation = JSON.parse(module.simulate(swi, clk));
     setLed(simulation.led);
+    setSeg(simulation.seg);
   }, [swi]);
 
   return (
@@ -64,7 +67,7 @@ function App() {
       <div style={styles.inner}>
         <Board background="#4285f4" border="#4b45cb">
           <Board background="#ffc90b" border="#9a5f05">
-            <SegmentsDisplay></SegmentsDisplay>
+            <SegmentsDisplay seg={seg} />
             <Switches swi={swi} setSwi={setSwi} />
           </Board>
           <Leds led={led} />
