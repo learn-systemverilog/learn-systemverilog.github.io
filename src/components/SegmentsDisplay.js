@@ -9,8 +9,8 @@ const styles = {
     },
     container: {
         position: 'relative',
-        width: '121px',
-        height: '180px'
+        width: '112px',
+        height: '164px'
     },
 };
 
@@ -33,14 +33,14 @@ export default function SegmentsDisplay(props) {
         <div style={styles.center}>
             <div style={styles.container}>
                 <img src={segmentsDisplay} alt="" style={styles.segmentsDisplay} />
-                <Segment top={'25px'} left={'26px'} isOn={seg[0]} />
-                <Segment top={'33px'} left={'74px'} type={'vertical'} isOn={seg[1]} />
-                <Segment top={'88px'} left={'74px'} type={'vertical'} isOn={seg[2]} />
-                <Segment top={'135px'} left={'26px'} isOn={seg[3]} />
-                <Segment top={'88px'} left={'17px'} type={'vertical'} isOn={seg[4]} />
-                <Segment top={'33px'} left={'17px'} type={'vertical'} isOn={seg[5]} />
-                <Segment top={'80px'} left={'26px'} isOn={true} isOn={seg[6]} />
-                <Segment top={'134px'} left={'91px'} type={'point'} isOn={true} isOn={seg[7]} />
+                <Segment top={'17px'} left={'19px'} isOn={seg[0]} />
+                <Segment top={'25px'} left={'67px'} type={'vertical'} isOn={seg[1]} />
+                <Segment top={'80px'} left={'67px'} type={'vertical'} isOn={seg[2]} />
+                <Segment top={'127px'} left={'19px'} isOn={seg[3]} />
+                <Segment top={'80px'} left={'10px'} type={'vertical'} isOn={seg[4]} />
+                <Segment top={'25px'} left={'10px'} type={'vertical'} isOn={seg[5]} />
+                <Segment top={'72px'} left={'19px'} isOn={true} isOn={seg[6]} />
+                <Segment top={'126px'} left={'84px'} type={'point'} isOn={true} isOn={seg[7]} />
             </div>
         </div>
     );
