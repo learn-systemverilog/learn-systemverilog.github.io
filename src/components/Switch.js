@@ -18,8 +18,8 @@ export default function Switch(props) {
     }
 
     if (on) {
-        return <img src={switchOn} style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
+        return <img src={switchOn} alt="" style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
     }
 
-    return <img src={switchOff} style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
+    return <img src={switchOff} alt="" style={styles.switch} onClick={() => { setOnWrapper(!on); }} />;
 }

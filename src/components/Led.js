@@ -10,8 +10,8 @@ const styles = {
 
 export default function Led(props) {
     if (props.on) {
-        return <img src={ledOn} style={styles.led} />;
+        return <img src={ledOn} alt="" style={styles.led} />;
     }
 
-    return <img src={ledOff} style={styles.led} />;
+    return <img src={ledOff} alt="" style={styles.led} />;
 }

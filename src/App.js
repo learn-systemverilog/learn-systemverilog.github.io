@@ -72,7 +72,7 @@ function App() {
             SystemVerilog
           </h1>
           <Board background="#3cdb83" border="#127141">
-            <img src={lcd} />
+            <img src={lcd} alt="" />
           </Board>
         </Board>
       </div>
