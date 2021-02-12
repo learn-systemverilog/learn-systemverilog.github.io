@@ -5,8 +5,6 @@ import Leds from './Leds';
 import SegmentsDisplay from "./SegmentsDisplay.js";
 import lcd from './lcd.png';
 
-import Module from '../simulator.js'
-
 const styles = {
     learnSystemVerilog: {
         color: 'white',
@@ -24,9 +22,12 @@ export default function Simulator() {
     const [module, setModule] = useState(null);
 
     useEffect(() => {
-        new Module().then(module => {
-            setModule(module);
-        });
+        (async function () {
+            (await import('../simulator.js')).default()
+                .then(module => {
+                    setModule(module);
+                });
+        })();
     }, []);
 
     function trySimulate() {
