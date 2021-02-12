@@ -4,7 +4,6 @@ import Led from './Led.js';
 const styles = {
     leds: {
         width: 'fit-content',
-        margin: 'auto',
         display: 'grid',
         gridAutoFlow: 'column',
     }

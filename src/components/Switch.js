@@ -4,7 +4,7 @@ import switchOff from './switchOff.png';
 
 const styles = {
     switch: {
-        margin: '8px',
+        margin: '12px',
         cursor: 'pointer',
     }
 };
