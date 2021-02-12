@@ -22,12 +22,14 @@ export default function Simulator() {
     const [module, setModule] = useState(null);
 
     useEffect(() => {
-        (async function () {
-            (await import('../simulator.js')).default()
-                .then(module => {
-                    setModule(module);
-                });
-        })();
+        fetch('simulator.js')
+            .then(response => {
+                return response.text();
+            })
+            .then(code => {
+                const Module = new Function(code + "\n\nreturn Module;")();
+                setModule(Module);
+            })
     }, []);
 
     function trySimulate() {
