@@ -1,4 +1,4 @@
-[![DeepSource](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web.svg/?label=active+issues&show_trend=true&token=OqS5LZxEb4lppHNNA8lTwK_-)](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web.svg/?label=active+issues&token=OqS5LZxEb4lppHNNA8lTwK_-)](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web/?ref=repository-badge)
 
 # Getting Started with Create React App
 
