@@ -38,28 +38,26 @@ function App() {
     });
   }, []);
 
+  function trySimulate() {
+    if (module === null) {
+      return;
+    }
+
+    const simulation = JSON.parse(module.simulate(swi, clk));
+    setLed(simulation.led);
+    setSeg(simulation.seg);
+  }
+
   useEffect(() => {
     setTimeout(() => {
       setClk(!clk)
     }, 1000);
 
-    if (module === null) {
-      return;
-    }
-
-    const simulation = JSON.parse(module.simulate(swi, clk));
-    setLed(simulation.led);
-    setSeg(simulation.seg);
+    trySimulate();
   }, [clk]);
 
   useEffect(() => {
-    if (module === null) {
-      return;
-    }
-
-    const simulation = JSON.parse(module.simulate(swi, clk));
-    setLed(simulation.led);
-    setSeg(simulation.seg);
+    trySimulate();
   }, [swi]);
 
   return (
