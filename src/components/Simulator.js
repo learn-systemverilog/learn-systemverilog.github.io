@@ -6,6 +6,9 @@ import SegmentsDisplay from "./SegmentsDisplay.js";
 import lcd from './lcd.png';
 
 const styles = {
+    fit: {
+        width: 'fit-content',
+    },
     learnSystemVerilog: {
         color: 'white',
         textAlign: 'center',
@@ -55,20 +58,22 @@ export default function Simulator() {
     }, [swi]);
 
     return (
-        <Board background="#4285f4" border="#4b45cb">
-            <Board background="#ffc90b" border="#9a5f05">
-                <SegmentsDisplay seg={seg} />
-                <Switches swi={swi} setSwi={setSwi} />
-            </Board>
-            <Leds led={led} />
-            <h1 style={styles.learnSystemVerilog}>
-                Learn
+        <div style={styles.fit}>
+            <Board background="#4285f4" border="#4b45cb">
+                <Board background="#ffc90b" border="#9a5f05">
+                    <SegmentsDisplay seg={seg} />
+                    <Switches swi={swi} setSwi={setSwi} />
+                </Board>
+                <Leds led={led} />
+                <h1 style={styles.learnSystemVerilog}>
+                    Learn
           <br />
           SystemVerilog
         </h1>
-            <Board background="#3cdb83" border="#127141">
-                <img src={lcd} alt="" />
+                <Board background="#3cdb83" border="#127141">
+                    <img src={lcd} alt="" />
+                </Board>
             </Board>
-        </Board>
+        </div>
     );
 }
