@@ -1,5 +1,7 @@
 FROM node:14.15.5-alpine
 
+RUN apk add --no-cache git
+
 EXPOSE 3000
 
 WORKDIR /app
