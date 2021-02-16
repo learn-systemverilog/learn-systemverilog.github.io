@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Bullseye, Stack, Card, CardBody, CardTitle, StackItem } from '@patternfly/react-core';
+import { Button, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
 import Simulator from "./components/Simulator.js";
 
 const styles = {
@@ -57,6 +57,12 @@ module top(input  logic clk_2,
 endmodule`;
 
 function App() {
+  const [isTranspiling, setIsTranspiling] = useState(false);
+
+  function simulate() {
+    setIsTranspiling(true);
+  };
+
   return (
     <Bullseye style={styles.padding}>
       <Stack hasGutter={true} style={styles.stack}>
@@ -82,6 +88,9 @@ function App() {
                 <Editor height="500px" defaultLanguage="systemverilog" defaultValue={dummyCode} />
               </div>
             </CardBody>
+            <CardFooter>
+              <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
+            </CardFooter>
           </Card>
         </StackItem>
       </Stack>
