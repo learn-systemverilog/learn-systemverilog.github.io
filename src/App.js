@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Button, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
+import { Button, Text, TextContent, TextVariants, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
 import Simulator from "./components/Simulator.js";
 
 const styles = {
@@ -91,6 +91,18 @@ function App() {
             <CardFooter>
               <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
             </CardFooter>
+          </Card>
+        </StackItem>
+        <StackItem>
+          <Card>
+            <CardTitle>
+              Console
+          </CardTitle>
+            <CardBody>
+              <TextContent>
+                <Text component={TextVariants.p}>Hello, World!</Text>
+              </TextContent>
+            </CardBody>
           </Card>
         </StackItem>
       </Stack>
