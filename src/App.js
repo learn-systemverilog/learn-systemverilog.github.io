@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Button, Text, TextContent, TextVariants, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
-import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
-import { Tooltip } from '@patternfly/react-core';
+import { Bullseye, Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
+import { Stack, StackItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
+import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem, Tooltip } from '@patternfly/react-core';
 import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
 import RedoIcon from '@patternfly/react-icons/dist/js/icons/redo-icon';
 import Simulator from "./components/Simulator.js";
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-const dummyCode = `// DESCRIPTION: Verilator: Systemverilog example module
+const defaultCode = `// DESCRIPTION: Verilator: Systemverilog example module
 // with interface to switch buttons, LEDs, LCD and register display
 
 parameter NINSTR_BITS = 32;
@@ -66,13 +66,12 @@ function App() {
 
   const [code, setCode] = useState('');
   const [isTranspiling, setIsTranspiling] = useState(false);
-  // const [console, setConsole] = useState([]);
 
   useEffect(() => {
     const localStorageCode = localStorage.getItem(localStorageLastSessionCodeKey);
 
     if (localStorageCode === null) {
-      setCode(dummyCode);
+      setCode(defaultCode);
     } else {
       setCode(localStorageCode);
     }
@@ -112,8 +111,8 @@ function App() {
     setCode(localStorage.getItem(localStorageLastSimulationCodeKey));
   }
 
-  function resetCodeToDummy() {
-    setCode(dummyCode);
+  function resetToDefaultCodeDefiniton() {
+    setCode(defaultCode);
   }
 
   return (
@@ -155,7 +154,7 @@ function App() {
                     </ToolbarItem>
                     <ToolbarItem>
                       <Tooltip content={<div>Reset to default code definition</div>}>
-                        <Button variant="secondary" aria-label="reset" icon={<CodeIcon />} onClick={resetCodeToDummy}>Reset</Button>
+                        <Button variant="secondary" aria-label="reset" icon={<CodeIcon />} onClick={resetToDefaultCodeDefiniton}>Reset</Button>
                       </Tooltip>
                     </ToolbarItem>
                   </ToolbarGroup>
