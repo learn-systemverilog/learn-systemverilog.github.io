@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Editor from "@monaco-editor/react";
 import { Button, Text, TextContent, TextVariants, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
 import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
+import { Tooltip } from '@patternfly/react-core';
 import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
+import RedoIcon from '@patternfly/react-icons/dist/js/icons/redo-icon';
 import Simulator from "./components/Simulator.js";
 
 const styles = {
@@ -59,11 +61,35 @@ module top(input  logic clk_2,
 endmodule`;
 
 function App() {
+  const localStorageLastSessionCodeKey = 'lastSessionCode';
+  const localStorageLastSimulationCodeKey = 'lastSimulationCode';
+
+  const [code, setCode] = useState('');
   const [isTranspiling, setIsTranspiling] = useState(false);
   // const [console, setConsole] = useState([]);
 
+  useEffect(() => {
+    const localStorageCode = localStorage.getItem(localStorageLastSessionCodeKey);
+
+    if (localStorageCode === null) {
+      setCode(dummyCode);
+    } else {
+      setCode(localStorageCode);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      localStorage.setItem(localStorageLastSessionCodeKey, code);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [code]);
+
   function simulate() {
     setIsTranspiling(true);
+
+    localStorage.setItem(localStorageLastSimulationCodeKey, code);
 
     let sse = new EventSource("http://localhost:8080/transpile");
     sse.onopen = function () {
@@ -71,12 +97,24 @@ function App() {
     }
     sse.onmessage = function (event) {
       console.log("Message: " + event.data);
-    };
+    }
     sse.onerror = function (event) {
       console.log("Error");
       sse.close();
-    };
-  };
+    }
+  }
+
+  function onEditorChange(value) {
+    setCode(value);
+  }
+
+  function reloadCodeFromLastSimulation() {
+    setCode(localStorage.getItem(localStorageLastSimulationCodeKey));
+  }
+
+  function resetCodeToDummy() {
+    setCode(dummyCode);
+  }
 
   return (
     <Bullseye style={styles.padding}>
@@ -100,23 +138,30 @@ function App() {
           </CardTitle>
             <CardBody>
               <div style={styles.editorWrapper}>
-                <Toolbar id="toolbar-group-types">
-                  <ToolbarContent>
-                    <ToolbarGroup variant="icon-button-group" alignment={{ default: 'alignRight' }}>
-                      <ToolbarItem>
-                        <Button variant="plain" aria-label="edit">
-                          <CodeIcon />
-                        </Button>
-                      </ToolbarItem>
-                    </ToolbarGroup>
-                  </ToolbarContent>
-                </Toolbar>
-                <Editor height="500px" defaultLanguage="systemverilog" defaultValue={dummyCode} />
+                <Editor height="500px" defaultLanguage="systemverilog" value={code} onChange={onEditorChange} />
               </div>
+              <Toolbar id="toolbar-group-types">
+                <ToolbarContent>
+                  <ToolbarGroup variant="button-group">
+                    <ToolbarItem>
+                      <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
+                    </ToolbarItem>
+                  </ToolbarGroup>
+                  <ToolbarGroup variant="button-group" alignment={{ default: 'alignRight' }}>
+                    <ToolbarItem>
+                      <Tooltip content={<div>Reset to last submitted code</div>}>
+                        <Button variant="secondary" aria-label="reload" icon={<RedoIcon />} onClick={reloadCodeFromLastSimulation}>Reload</Button>
+                      </Tooltip>
+                    </ToolbarItem>
+                    <ToolbarItem>
+                      <Tooltip content={<div>Reset to default code definition</div>}>
+                        <Button variant="secondary" aria-label="reset" icon={<CodeIcon />} onClick={resetCodeToDummy}>Reset</Button>
+                      </Tooltip>
+                    </ToolbarItem>
+                  </ToolbarGroup>
+                </ToolbarContent>
+              </Toolbar>
             </CardBody>
-            <CardFooter>
-              <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
-            </CardFooter>
           </Card>
         </StackItem>
         <StackItem>
