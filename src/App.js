@@ -97,9 +97,11 @@ function App() {
     sse.onmessage = function (event) {
       console.log("Message: " + event.data);
     }
-    sse.onerror = function (event) {
+    sse.onerror = function () {
       console.log("Error");
       sse.close();
+
+      setIsTranspiling(false);
     }
   }
 
