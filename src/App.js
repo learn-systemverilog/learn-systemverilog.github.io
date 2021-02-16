@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Editor from "@monaco-editor/react";
 import { Button, Text, TextContent, TextVariants, Bullseye, Stack, Card, CardBody, CardTitle, CardFooter, StackItem } from '@patternfly/react-core';
+import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
+import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
 import Simulator from "./components/Simulator.js";
 
 const styles = {
@@ -58,9 +60,22 @@ endmodule`;
 
 function App() {
   const [isTranspiling, setIsTranspiling] = useState(false);
+  // const [console, setConsole] = useState([]);
 
   function simulate() {
     setIsTranspiling(true);
+
+    let sse = new EventSource("http://localhost:8080/transpile");
+    sse.onopen = function () {
+      console.log("Open");
+    }
+    sse.onmessage = function (event) {
+      console.log("Message: " + event.data);
+    };
+    sse.onerror = function (event) {
+      console.log("Error");
+      sse.close();
+    };
   };
 
   return (
@@ -85,6 +100,17 @@ function App() {
           </CardTitle>
             <CardBody>
               <div style={styles.editorWrapper}>
+                <Toolbar id="toolbar-group-types">
+                  <ToolbarContent>
+                    <ToolbarGroup variant="icon-button-group" alignment={{ default: 'alignRight' }}>
+                      <ToolbarItem>
+                        <Button variant="plain" aria-label="edit">
+                          <CodeIcon />
+                        </Button>
+                      </ToolbarItem>
+                    </ToolbarGroup>
+                  </ToolbarContent>
+                </Toolbar>
                 <Editor height="500px" defaultLanguage="systemverilog" defaultValue={dummyCode} />
               </div>
             </CardBody>
