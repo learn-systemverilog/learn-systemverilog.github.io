@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
     "@monaco-editor/react": "^4.0.9",
     "@patternfly/react-core": "^4.90.2",
     "@testing-library/jest-dom": "^5.11.9",
