@@ -90,7 +90,9 @@ function App() {
 
     localStorage.setItem(localStorageLastSimulationCodeKey, code);
 
-    let sse = new EventSource("http://localhost:8080/transpile");
+    const encodedCode = encodeURIComponent(code);
+
+    let sse = new EventSource("http://localhost:8080/transpile?code=" + encodedCode);
     sse.onopen = function () {
       console.log("Open");
     }
