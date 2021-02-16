@@ -12,6 +12,8 @@ const styles = {
     learnSystemVerilog: {
         color: 'white',
         textAlign: 'center',
+        fontSize: '30px',
+        fontWeight: 'bold',
         fontFamily: "'Roboto Mono', monospace",
     },
 };
@@ -64,11 +66,7 @@ export default function Simulator() {
                 <Switches swi={swi} setSwi={setSwi} />
             </Board>
             <Leds led={led} />
-            <h1 style={styles.learnSystemVerilog}>
-                Learn
-          <br />
-          SystemVerilog
-        </h1>
+            <p style={styles.learnSystemVerilog}>Learn<br />SystemVerilog</p>
             <Board background="#3cdb83" border="#127141">
                 <img src={lcd} alt="" />
             </Board>
