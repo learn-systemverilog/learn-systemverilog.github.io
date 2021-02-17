@@ -20,6 +20,31 @@ const styles = {
     borderWidth: 'thin',
     borderColor: 'var(--pf-global--BorderColor--100)',
   },
+  colorDanger: {
+    color: '#A30000',
+    fontWeight: 'bold',
+    fontFamily: "'Roboto Mono', monospace",
+  },
+  colorInfo: {
+    color: '#002952',
+    fontWeight: 'bold',
+    fontFamily: "'Roboto Mono', monospace",
+  },
+  colorSuccess: {
+    color: '#3E8635',
+    fontWeight: 'bold',
+    fontFamily: "'Roboto Mono', monospace",
+  },
+  colorWarning: {
+    color: '#795600',
+    fontWeight: 'bold',
+    fontFamily: "'Roboto Mono', monospace",
+  },
+  colorDefault: {
+    color: '#009596',
+    fontWeight: 'bold',
+    fontFamily: "'Roboto Mono', monospace",
+  },
 };
 
 const defaultCode = `// DESCRIPTION: Verilator: Systemverilog example module
@@ -66,6 +91,7 @@ function App() {
 
   const [code, setCode] = useState('');
   const [isTranspiling, setIsTranspiling] = useState(false);
+  const [logs, setLogs] = useState([]);
 
   useEffect(() => {
     const localStorageCode = localStorage.getItem(localStorageLastSessionCodeKey);
@@ -85,6 +111,10 @@ function App() {
     return () => clearTimeout(timer);
   }, [code]);
 
+  function newLog(id, text, style) {
+    return <span key={id} style={style}>{text}<br /></span>;
+  }
+
   function simulate() {
     setIsTranspiling(true);
 
@@ -92,15 +122,52 @@ function App() {
 
     const encodedCode = encodeURIComponent(code);
 
+    let nextLogID = 0;
     let sse = new EventSource("http://localhost:8080/transpile?code=" + encodedCode);
+    setLogs(state => [...state, newLog(nextLogID++, '[local]: Connecting...', styles.colorInfo)]);
+
     sse.onopen = function () {
-      console.log("Open");
+      setLogs(state => [...state, newLog(nextLogID++, '[local]: Connected!', styles.colorSuccess)]);
     }
-    sse.onmessage = function (event) {
-      console.log("Message: " + event.data);
-    }
+
+    sse.addEventListener('internal', e => {
+      const data = JSON.parse(e.data);
+
+      let style = undefined;
+      switch (data.severity) {
+        case 'info':
+          style = styles.colorInfo;
+          break;
+        case 'warn':
+          style = styles.colorWarning;
+          break;
+        case 'error':
+          style = styles.colorDanger;
+          break;
+      }
+
+      setLogs(state => [...state, newLog(nextLogID++, '[internal]: ' + data.message, style)]);
+    });
+
+    sse.addEventListener('stdout', e => {
+      const data = JSON.parse(e.data);
+
+      setLogs(state => [...state, newLog(nextLogID++, '> ' + data.stdout, styles.colorDefault)]);
+    });
+
+    sse.addEventListener('stderr', e => {
+      const data = JSON.parse(e.data);
+
+      setLogs(state => [...state, newLog(nextLogID++, '> ' + data.stderr, styles.colorWarning)]);
+    });
+
+    sse.addEventListener('output', e => {
+      // const data = JSON.parse(e.data);
+
+      setLogs(state => [...state, newLog(nextLogID++, 'Success!', styles.colorSuccess)]);
+    });
+
     sse.onerror = function () {
-      console.log("Error");
       sse.close();
 
       setIsTranspiling(false);
@@ -174,7 +241,7 @@ function App() {
           </CardTitle>
             <CardBody>
               <TextContent>
-                <Text component={TextVariants.p}>Hello, World!</Text>
+                {logs}
               </TextContent>
             </CardBody>
           </Card>
