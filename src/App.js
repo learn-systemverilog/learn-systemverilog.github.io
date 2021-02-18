@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { Stack, StackItem, TextArea } from '@patternfly/react-core';
 import { Bullseye, Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
-import { Stack, StackItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
 import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem, Tooltip } from '@patternfly/react-core';
 import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
 import RedoIcon from '@patternfly/react-icons/dist/js/icons/redo-icon';
@@ -20,31 +20,10 @@ const styles = {
     borderWidth: 'thin',
     borderColor: 'var(--pf-global--BorderColor--100)',
   },
-  colorDanger: {
-    color: '#A30000',
-    fontWeight: 'bold',
-    fontFamily: "'Roboto Mono', monospace",
-  },
-  colorInfo: {
-    color: '#002952',
-    fontWeight: 'bold',
-    fontFamily: "'Roboto Mono', monospace",
-  },
-  colorSuccess: {
-    color: '#3E8635',
-    fontWeight: 'bold',
-    fontFamily: "'Roboto Mono', monospace",
-  },
-  colorWarning: {
-    color: '#795600',
-    fontWeight: 'bold',
-    fontFamily: "'Roboto Mono', monospace",
-  },
-  colorDefault: {
-    color: '#009596',
-    fontWeight: 'bold',
-    fontFamily: "'Roboto Mono', monospace",
-  },
+  console: {
+    minHeight: '600px',
+    fontFamily: 'Courier New, sans-serif',
+  }
 };
 
 const defaultCode = `// DESCRIPTION: Verilator: Systemverilog example module
@@ -112,8 +91,8 @@ function App() {
     return () => clearTimeout(timer);
   }, [code]);
 
-  function newLog(id, text, style) {
-    return <span key={id} style={style}>{text}<br /></span>;
+  function consoleWriteLine(text) {
+    setLogs(state => state + text + '\n');
   }
 
   function simulate() {
@@ -123,46 +102,30 @@ function App() {
 
     const encodedCode = encodeURIComponent(code);
 
-    let nextLogID = 0;
-    setLogs([]);
-
     // TODO: Use env vars.
     let sse = new EventSource("https://learn-systemverilog-api.herokuapp.com/transpile?code=" + encodedCode);
-    setLogs(state => [...state, newLog(nextLogID++, '[local]: Connecting...', styles.colorInfo)]);
+    consoleWriteLine('[local]: Connecting...');
 
     sse.onopen = function () {
-      setLogs(state => [...state, newLog(nextLogID++, '[local]: Connected!', styles.colorSuccess)]);
+      consoleWriteLine('[local]: Connected!');
     }
 
     sse.addEventListener('internal', e => {
       const data = JSON.parse(e.data);
 
-      let style = undefined;
-      switch (data.severity) {
-        case 'info':
-          style = styles.colorInfo;
-          break;
-        case 'warn':
-          style = styles.colorWarning;
-          break;
-        case 'error':
-          style = styles.colorDanger;
-          break;
-      }
-
-      setLogs(state => [...state, newLog(nextLogID++, '[internal]: ' + data.message, style)]);
+      consoleWriteLine(`[internal][${data.severity}]: ` + data.message);
     });
 
     sse.addEventListener('stdout', e => {
       const data = JSON.parse(e.data);
 
-      setLogs(state => [...state, newLog(nextLogID++, '> ' + data.stdout, styles.colorDefault)]);
+      consoleWriteLine('[out]: ' + data.stdout);
     });
 
     sse.addEventListener('stderr', e => {
       const data = JSON.parse(e.data);
 
-      setLogs(state => [...state, newLog(nextLogID++, '> ' + data.stderr, styles.colorWarning)]);
+      consoleWriteLine('[err]: ' + data.stderr);
     });
 
     sse.addEventListener('output', e => {
@@ -170,13 +133,15 @@ function App() {
 
       setTranspiledCode(data);
 
-      setLogs(state => [...state, newLog(nextLogID++, 'Success!', styles.colorSuccess)]);
+      consoleWriteLine('[local]: Success! Check the simulator to see the results.');
     });
 
     sse.onerror = function () {
       sse.close();
 
       setIsTranspiling(false);
+
+      consoleWriteLine('[local]: Connection closed.');
     }
   }
 
@@ -245,10 +210,8 @@ function App() {
             <CardTitle>
               Console
           </CardTitle>
-            <CardBody>
-              <TextContent>
-                {logs}
-              </TextContent>
+            <CardBody >
+              <TextArea value={logs} isReadOnly={true} resizeOrientation="vertical" aria-label="console" style={styles.console} />
             </CardBody>
           </Card>
         </StackItem>
