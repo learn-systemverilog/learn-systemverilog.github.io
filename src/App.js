@@ -92,6 +92,7 @@ function App() {
   const [code, setCode] = useState('');
   const [isTranspiling, setIsTranspiling] = useState(false);
   const [logs, setLogs] = useState([]);
+  const [transpiledCode, setTranspiledCode] = useState('');
 
   useEffect(() => {
     const localStorageCode = localStorage.getItem(localStorageLastSessionCodeKey);
@@ -123,7 +124,10 @@ function App() {
     const encodedCode = encodeURIComponent(code);
 
     let nextLogID = 0;
-    let sse = new EventSource("http://localhost:8080/transpile?code=" + encodedCode);
+    setLogs([]);
+
+    // TODO: Use env vars.
+    let sse = new EventSource("https://learn-systemverilog-api.herokuapp.com/transpile?code=" + encodedCode);
     setLogs(state => [...state, newLog(nextLogID++, '[local]: Connecting...', styles.colorInfo)]);
 
     sse.onopen = function () {
@@ -162,7 +166,9 @@ function App() {
     });
 
     sse.addEventListener('output', e => {
-      // const data = JSON.parse(e.data);
+      const data = JSON.parse(e.data);
+
+      setTranspiledCode(data);
 
       setLogs(state => [...state, newLog(nextLogID++, 'Success!', styles.colorSuccess)]);
     });
@@ -196,7 +202,7 @@ function App() {
           </CardTitle>
             <CardBody>
               <Bullseye>
-                <Simulator />
+                <Simulator code={transpiledCode} />
               </Bullseye>
             </CardBody>
           </Card>

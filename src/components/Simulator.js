@@ -18,7 +18,7 @@ const styles = {
     },
 };
 
-export default function Simulator() {
+export default function Simulator(props) {
     const [led, setLed] = useState(0);
     const [seg, setSeg] = useState(0);
     const [swi, setSwi] = useState(0);
@@ -27,15 +27,13 @@ export default function Simulator() {
     const [module, setModule] = useState(null);
 
     useEffect(() => {
-        fetch('simulator.js')
-            .then(response => {
-                return response.text();
-            })
-            .then(code => {
-                const Module = new Function(code + "\n\nreturn Module;")();
-                setModule(Module);
-            })
-    }, []);
+        if (props.code === '') {
+            return;
+        }
+
+        const Module = new Function(props.code + "\n\nreturn Module;")();
+        setModule(Module);
+    }, [props.code]);
 
     function trySimulate() {
         if (module === null) {
