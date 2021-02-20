@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Stack, StackItem } from '@patternfly/react-core';
 import { Bullseye, Card, CardBody, CardTitle } from '@patternfly/react-core';
 import Simulator from "./components/Simulator.js";
-import Console from "./components/Console.js"
 import EditorCard from "./components/EditorCard.js";
+import ConsoleCard from "./components/ConsoleCard.js";
 
 const styles = {
   padding: {
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <Bullseye style={styles.padding}>
-      <Stack hasGutter={true} style={styles.stack}>
+      <Stack hasGutter style={styles.stack}>
         <StackItem>
           <Card>
             <CardTitle>
@@ -38,14 +38,7 @@ function App() {
           <EditorCard setLogs={setLogs} setTranspiledCode={setTranspiledCode} />
         </StackItem>
         <StackItem>
-          <Card>
-            <CardTitle>
-              Console
-          </CardTitle>
-            <CardBody >
-              <Console value={logs} />
-            </CardBody>
-          </Card>
+          <ConsoleCard logs={logs} />
         </StackItem>
       </Stack>
     </Bullseye>
