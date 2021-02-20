@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
-import { Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
-import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem, Tooltip } from '@patternfly/react-core';
+import React, { useEffect, useState } from 'react';
+import Editor from '@monaco-editor/react';
 import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
 import RedoIcon from '@patternfly/react-icons/dist/js/icons/redo-icon';
-import { defaultCode } from "../constants.js"
+import { Stack, Split, SplitItem, Tooltip } from '@patternfly/react-core';
+import { Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
+import { defaultCode } from '../constants.js'
 
 const styles = {
     editorWrapper: {
@@ -111,30 +111,27 @@ export default function EditorCard(props) {
                 Code Editor
                 </CardTitle>
             <CardBody>
-                <div style={styles.editorWrapper}>
-                    <Editor height="500px" defaultLanguage="systemverilog" value={code} onChange={onEditorChange} />
-                </div>
-                <Toolbar id="toolbar-group-types">
-                    <ToolbarContent>
-                        <ToolbarGroup variant="button-group">
-                            <ToolbarItem>
-                                <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
-                            </ToolbarItem>
-                        </ToolbarGroup>
-                        <ToolbarGroup variant="button-group" alignment={{ default: 'alignRight' }}>
-                            <ToolbarItem>
-                                <Tooltip content={<div>Reset to last submitted code</div>}>
-                                    <Button variant="secondary" aria-label="reload" icon={<RedoIcon />} onClick={reloadCodeFromLastSimulation}>Reload</Button>
-                                </Tooltip>
-                            </ToolbarItem>
-                            <ToolbarItem>
-                                <Tooltip content={<div>Reset to default code definition</div>}>
-                                    <Button variant="secondary" aria-label="reset" icon={<CodeIcon />} onClick={resetToDefaultCodeDefiniton}>Reset</Button>
-                                </Tooltip>
-                            </ToolbarItem>
-                        </ToolbarGroup>
-                    </ToolbarContent>
-                </Toolbar>
+                <Stack hasGutter>
+                    <div style={styles.editorWrapper}>
+                        <Editor height="500px" defaultLanguage="systemverilog" value={code} onChange={onEditorChange} />
+                    </div>
+                    <Split hasGutter>
+                        <SplitItem>
+                            <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
+                        </SplitItem>
+                        <SplitItem isFilled />
+                        <SplitItem>
+                            <Tooltip content={<div>Reset to last submitted code</div>}>
+                                <Button variant="secondary" aria-label="reload" icon={<RedoIcon />} onClick={reloadCodeFromLastSimulation}>Reload</Button>
+                            </Tooltip>
+                        </SplitItem>
+                        <SplitItem>
+                            <Tooltip content={<div>Reset to default code definition</div>}>
+                                <Button variant="secondary" aria-label="reset" icon={<CodeIcon />} onClick={resetToDefaultCodeDefiniton}>Reset</Button>
+                            </Tooltip>
+                        </SplitItem>
+                    </Split>
+                </Stack>
             </CardBody>
         </Card>
     );
