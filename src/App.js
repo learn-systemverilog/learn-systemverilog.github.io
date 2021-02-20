@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Stack, StackItem, TextArea } from '@patternfly/react-core';
+import { Stack, StackItem } from '@patternfly/react-core';
 import { Bullseye, Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
 import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem, Tooltip } from '@patternfly/react-core';
 import CodeIcon from '@patternfly/react-icons/dist/js/icons/code-icon';
 import RedoIcon from '@patternfly/react-icons/dist/js/icons/redo-icon';
 import Simulator from "./components/Simulator.js";
+import Console from "./components/Console.js"
 import { defaultCode } from "./constants.js"
 
 const styles = {
@@ -21,10 +22,6 @@ const styles = {
     borderWidth: 'thin',
     borderColor: 'var(--pf-global--BorderColor--100)',
   },
-  console: {
-    minHeight: '600px',
-    fontFamily: 'Courier New, sans-serif',
-  }
 };
 
 function App() {
@@ -174,7 +171,7 @@ function App() {
               Console
           </CardTitle>
             <CardBody >
-              <TextArea value={logs} isReadOnly={true} resizeOrientation="vertical" aria-label="console" style={styles.console} />
+              <Console value={logs} />
             </CardBody>
           </Card>
         </StackItem>
