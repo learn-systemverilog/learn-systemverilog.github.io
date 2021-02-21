@@ -19,6 +19,10 @@ function App() {
   const [logs, setLogs] = useState('');
   const [transpiledCode, setTranspiledCode] = useState('');
 
+  function clearLogs() {
+    setLogs('');
+  }
+
   return (
     <Bullseye style={styles.padding}>
       <Stack hasGutter style={styles.stack}>
@@ -38,7 +42,7 @@ function App() {
           <EditorCard setLogs={setLogs} setTranspiledCode={setTranspiledCode} />
         </StackItem>
         <StackItem>
-          <ConsoleCard logs={logs} />
+          <ConsoleCard logs={logs} onClearLogs={clearLogs} />
         </StackItem>
       </Stack>
     </Bullseye>
