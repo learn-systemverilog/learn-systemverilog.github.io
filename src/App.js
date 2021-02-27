@@ -8,6 +8,8 @@ import ConsoleCard from "./components/ConsoleCard.js";
 import PageHeaderUser from "./components/PageHeaderUser.js";
 
 function App() {
+  const [user, setUser] = useState({});
+
   const [logs, setLogs] = useState('');
   const [transpiledCode, setTranspiledCode] = useState('');
 
@@ -18,7 +20,7 @@ function App() {
   const Header = (
     <PageHeader logo="Learn SystemVerilog" headerTools={
       <PageHeaderTools>
-        <PageHeaderUser />
+        <PageHeaderUser user={user} setUser={setUser} />
       </PageHeaderTools>
     } />
   );

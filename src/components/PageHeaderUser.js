@@ -4,22 +4,25 @@ import { Bullseye, Split, SplitItem } from '@patternfly/react-core';
 import { PageHeaderToolsGroup, PageHeaderToolsItem } from '@patternfly/react-core';
 import { Avatar, Spinner, Button, Tooltip } from '@patternfly/react-core';
 
-export default function PageHeaderUser() {
-    const [isSignedIn, setIsSignedIn] = useState(undefined);
-    const [imageUrl, setImageUrl] = useState('');
-    const [name, setName] = useState('?');
-    const [email, setEmail] = useState('?');
+export default function PageHeaderUser(props) {
+    const user = props.user;
+    const setUser = props.setUser;
 
     const onSignInSuccess = (response) => {
-        setImageUrl(response.profileObj.imageUrl);
-        setName(response.profileObj.name);
-        setEmail(response.profileObj.email);
-
-        setIsSignedIn(true);
+        setUser(user => ({
+            ...user,
+            isSignedIn: true,
+            imageUrl: response.profileObj.imageUrl,
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+        }));
     }
 
     const onSignInAutoLoadFinished = (isSignedIn) => {
-        setIsSignedIn(isSignedIn);
+        setUser(user => ({
+            ...user,
+            isSignedIn: isSignedIn,
+        }));
     }
 
     const onSignInFailure = (response) => {
@@ -27,7 +30,10 @@ export default function PageHeaderUser() {
     }
 
     const onLogoutSuccess = () => {
-        setIsSignedIn(false);
+        setUser(user => ({
+            ...user,
+            isSignedIn: false,
+        }));
     }
 
     const { signOut } = useGoogleLogout({
@@ -38,14 +44,14 @@ export default function PageHeaderUser() {
     const AvatarTooltipContent = (
         <div>
             Google Account<br />
-            {name}<br />
-            {email}<br />
+            {user.name}<br />
+            {user.email}<br />
         </div>
     );
 
     return (
         <>
-            <PageHeaderToolsGroup visibility={{ default: isSignedIn !== false ? 'hidden' : 'visible' }}>
+            <PageHeaderToolsGroup visibility={{ default: user.isSignedIn !== false ? 'hidden' : 'visible' }}>
                 <PageHeaderToolsItem>
                     <GoogleLogin
                         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -58,12 +64,12 @@ export default function PageHeaderUser() {
                     />
                 </PageHeaderToolsItem>
             </PageHeaderToolsGroup>
-            {isSignedIn === true &&
+            {user.isSignedIn === true &&
                 <Split hasGutter>
                     <SplitItem>
                         <Bullseye>
                             <Tooltip content={AvatarTooltipContent}>
-                                <Avatar src={imageUrl} alt="avatar" />
+                                <Avatar src={user.imageUrl} alt="avatar" />
                             </Tooltip>
                         </Bullseye>
                     </SplitItem>
@@ -72,7 +78,7 @@ export default function PageHeaderUser() {
                     </SplitItem>
                 </Split>
             }
-            {isSignedIn === undefined &&
+            {user.isSignedIn === undefined &&
                 <Spinner size="lg" />
             }
         </>
