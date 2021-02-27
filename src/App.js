@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { GoogleLogin, useGoogleLogout } from 'react-google-login';
-import { Spinner, Button } from '@patternfly/react-core';
+import { Avatar, Spinner, Button, Tooltip } from '@patternfly/react-core';
 import { Card, CardBody, CardTitle } from '@patternfly/react-core';
-import { Bullseye, Stack, StackItem, } from '@patternfly/react-core';
-import { Page, PageHeader, PageHeaderTools, PageSection, PageSectionVariants } from '@patternfly/react-core';
+import { Bullseye, Stack, StackItem, Split, SplitItem } from '@patternfly/react-core';
+import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
+import { PageHeader, PageHeaderTools, PageHeaderToolsGroup, PageHeaderToolsItem } from '@patternfly/react-core';
 import Simulator from "./components/Simulator.js";
 import EditorCard from "./components/EditorCard.js";
 import ConsoleCard from "./components/ConsoleCard.js";
@@ -17,9 +18,14 @@ function App() {
   }
 
   const [isSignedIn, setIsSignedIn] = useState(undefined);
+  const [imageUrl, setImageUrl] = useState('');
+  const [name, setName] = useState('?');
+  const [email, setEmail] = useState('?');
 
   const onSignInSuccess = (response) => {
-    console.log(response);
+    setImageUrl(response.profileObj.imageUrl);
+    setName(response.profileObj.name);
+    setEmail(response.profileObj.email);
 
     setIsSignedIn(true);
   }
@@ -40,23 +46,44 @@ function App() {
     onLogoutSuccess: onLogoutSuccess,
   });
 
+  const AvatarTooltipContent = (
+    <div>
+      Google Account<br />
+      {name}<br />
+      {email}<br />
+    </div>
+  );
+
   const Header = (
     <PageHeader logo="Learn SystemVerilog" headerTools={
       <PageHeaderTools>
-        <div hidden={isSignedIn !== false}>
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="Sign in with Google"
-            onSuccess={onSignInSuccess}
-            onAutoLoadFinished={onSignInAutoLoadFinished}
-            onFailure={onSignInFailure}
-            isSignedIn={true}
-            cookiePolicy={'single_host_origin'}
-          />
-        </div>
-        <div hidden={isSignedIn !== true}>
-          <Button variant="secondary" onClick={signOut}>Log out</Button>
-        </div>
+        <PageHeaderToolsGroup visibility={{ default: isSignedIn !== false ? 'hidden' : 'visible' }}>
+          <PageHeaderToolsItem>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Sign in with Google"
+              onSuccess={onSignInSuccess}
+              onAutoLoadFinished={onSignInAutoLoadFinished}
+              onFailure={onSignInFailure}
+              isSignedIn={true}
+              cookiePolicy={'single_host_origin'}
+            />
+          </PageHeaderToolsItem>
+        </PageHeaderToolsGroup>
+        {isSignedIn === true &&
+          <Split hasGutter>
+            <SplitItem>
+              <Bullseye>
+                <Tooltip content={AvatarTooltipContent}>
+                  <Avatar src={imageUrl} alt="avatar" />
+                </Tooltip>
+              </Bullseye>
+            </SplitItem>
+            <SplitItem>
+              <Button variant="secondary" onClick={signOut}>Log out</Button>
+            </SplitItem>
+          </Split>
+        }
         {isSignedIn === undefined &&
           <Spinner size="lg" />
         }
