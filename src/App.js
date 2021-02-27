@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { GoogleLogin, useGoogleLogout } from 'react-google-login';
 import { Avatar, Spinner, Button, Tooltip } from '@patternfly/react-core';
-import { Card, CardBody, CardTitle } from '@patternfly/react-core';
 import { Bullseye, Stack, StackItem, Split, SplitItem } from '@patternfly/react-core';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTools, PageHeaderToolsGroup, PageHeaderToolsItem } from '@patternfly/react-core';
-import Simulator from "./components/Simulator.js";
+import SimulatorCard from "./components/SimulatorCard.js";
 import EditorCard from "./components/EditorCard.js";
 import ConsoleCard from "./components/ConsoleCard.js";
 
@@ -96,16 +95,7 @@ function App() {
       <PageSection variant={PageSectionVariants.default}>
         <Stack hasGutter>
           <StackItem>
-            <Card>
-              <CardTitle>
-                Simulator
-              </CardTitle>
-              <CardBody>
-                <Bullseye>
-                  <Simulator code={transpiledCode} />
-                </Bullseye>
-              </CardBody>
-            </Card>
+            <SimulatorCard code={transpiledCode} />
           </StackItem>
           <StackItem>
             <EditorCard setLogs={setLogs} setTranspiledCode={setTranspiledCode} />
