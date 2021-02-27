@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
+import { GoogleLogin, useGoogleLogout } from 'react-google-login';
 import { Spinner, Button } from '@patternfly/react-core';
 import { Card, CardBody, CardTitle } from '@patternfly/react-core';
 import { Bullseye, Stack, StackItem, } from '@patternfly/react-core';
@@ -35,15 +35,6 @@ function App() {
     setIsSignedIn(false);
   }
 
-  const { signIn } = useGoogleLogin({
-    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-    onSuccess: onSignInSuccess,
-    onAutoLoadFinished: onSignInAutoLoadFinished,
-    onFailure: onSignInFailure,
-    isSignedIn: true,
-    cookiePolicy: 'single_host_origin',
-  });
-
   const { signOut } = useGoogleLogout({
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     onLogoutSuccess: onLogoutSuccess,
@@ -52,12 +43,20 @@ function App() {
   const Header = (
     <PageHeader logo="Learn SystemVerilog" headerTools={
       <PageHeaderTools>
-        {isSignedIn === false &&
-          <Button variant="primary" onClick={signIn}>Sign in</Button>
-        }
-        {isSignedIn === true &&
+        <div hidden={isSignedIn !== false}>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText="Sign in with Google"
+            onSuccess={onSignInSuccess}
+            onAutoLoadFinished={onSignInAutoLoadFinished}
+            onFailure={onSignInFailure}
+            isSignedIn={true}
+            cookiePolicy={'single_host_origin'}
+          />
+        </div>
+        <div hidden={isSignedIn !== true}>
           <Button variant="secondary" onClick={signOut}>Log out</Button>
-        }
+        </div>
         {isSignedIn === undefined &&
           <Spinner size="lg" />
         }
