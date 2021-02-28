@@ -69,13 +69,13 @@ export default function EditorCard(props) {
         sse.addEventListener('stdout', e => {
             const data = JSON.parse(e.data);
 
-            log('[out]: ' + data.stdout);
+            log('[stdout]: ' + data.stdout);
         });
 
         sse.addEventListener('stderr', e => {
             const data = JSON.parse(e.data);
 
-            log('[err]: ' + data.stderr);
+            log('[stderr]: ' + data.stderr);
         });
 
         sse.addEventListener('output', e => {
