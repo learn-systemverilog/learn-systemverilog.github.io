@@ -33,7 +33,7 @@ function App() {
             <SimulatorCard code={transpiledCode} />
           </StackItem>
           <StackItem>
-            <EditorCard setLogs={setLogs} setTranspiledCode={setTranspiledCode} />
+            <EditorCard user={user} setLogs={setLogs} setTranspiledCode={setTranspiledCode} />
           </StackItem>
           <StackItem>
             <ConsoleCard logs={logs} onClearLogs={clearLogs} />

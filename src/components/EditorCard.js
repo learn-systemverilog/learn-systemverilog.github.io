@@ -47,10 +47,13 @@ export default function EditorCard(props) {
 
         localStorage.setItem(localStorageLastSimulationCodeKey, code);
 
-        const encodedCode = encodeURIComponent(code);
+        const url = new URL('/transpile', process.env.REACT_APP_API_URL);
+        url.searchParams.append('code', code);
 
-        // TODO: Use env vars.
-        let sse = new EventSource("https://learn-systemverilog-api.herokuapp.com/transpile?code=" + encodedCode);
+        // TODO: It can be dangerous! Replace it with something else in the future.
+        url.searchParams.append('tokenId', props.user.tokenId);
+
+        let sse = new EventSource(url.href);
         log('[local]: Connecting...');
 
         sse.onopen = function () {

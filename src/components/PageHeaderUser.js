@@ -15,6 +15,7 @@ export default function PageHeaderUser(props) {
             imageUrl: response.profileObj.imageUrl,
             name: response.profileObj.name,
             email: response.profileObj.email,
+            tokenId: response.tokenId,
         }));
     }
 
