@@ -20,10 +20,9 @@ export default function PageHeaderUser(props) {
     }
 
     const onSignInAutoLoadFinished = (isSignedIn) => {
-        setUser(user => ({
-            ...user,
-            isSignedIn: isSignedIn,
-        }));
+        if (!isSignedIn) {
+            setUser({ isSignedIn: isSignedIn });
+        }
     }
 
     const onSignInFailure = (response) => {
@@ -31,10 +30,7 @@ export default function PageHeaderUser(props) {
     }
 
     const onLogoutSuccess = () => {
-        setUser(user => ({
-            ...user,
-            isSignedIn: false,
-        }));
+        setUser({ isSignedIn: false });
     }
 
     const { signOut } = useGoogleLogout({
