@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { Stack, StackItem, Split, SplitItem } from '@patternfly/react-core';
+import { Stack, StackItem, Split, SplitItem, Modal, ModalVariant } from '@patternfly/react-core';
 import { Button, Card, CardBody, CardTitle, Tooltip } from '@patternfly/react-core';
 import { CodeIcon, RedoIcon } from '@patternfly/react-icons'
 import { defaultCode } from '../constants.js'
@@ -16,6 +16,8 @@ const styles = {
 export default function EditorCard(props) {
     const [code, setCode] = useState('');
     const [isTranspiling, setIsTranspiling] = useState(false);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const localStorageLastSessionCodeKey = 'lastSessionCode';
     const localStorageLastSimulationCodeKey = 'lastSimulationCode';
@@ -43,6 +45,11 @@ export default function EditorCard(props) {
     }
 
     function simulate() {
+        if (!props.user.isSignedIn) {
+            setIsModalOpen(true);
+            return;
+        }
+
         setIsTranspiling(true);
 
         localStorage.setItem(localStorageLastSimulationCodeKey, code);
@@ -123,6 +130,15 @@ export default function EditorCard(props) {
                         <Split hasGutter>
                             <SplitItem>
                                 <Button variant="primary" isLoading={isTranspiling} isDisabled={isTranspiling} onClick={simulate}>Simulate!</Button>
+                                <Modal
+                                    variant={ModalVariant.small}
+                                    title="You must be signed in"
+                                    titleIconVariant="warning"
+                                    isOpen={isModalOpen}
+                                    onClose={() => setIsModalOpen(false)}
+                                >
+                                    To simulate, you must be signed in before.
+                                </Modal>
                             </SplitItem>
                             <SplitItem isFilled />
                             <SplitItem>
