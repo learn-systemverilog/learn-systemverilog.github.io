@@ -1,6 +1,6 @@
 # Learn SystemVerilog Web
 
-[![DeepSource](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web.svg/?label=active+issues&token=OqS5LZxEb4lppHNNA8lTwK_-)](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog.github.io.svg/?label=active+issues)](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog.github.io/?ref=repository-badge)
 
 Website: https://learn-systemverilog.github.io
 
