@@ -2,7 +2,7 @@
 
 [![DeepSource](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web.svg/?label=active+issues&token=OqS5LZxEb4lppHNNA8lTwK_-)](https://deepsource.io/gh/learn-systemverilog/learn-systemverilog-web/?ref=repository-badge)
 
-Website: https://learn-systemverilog-web.herokuapp.com
+Website: https://learn-systemverilog.github.io
 
 # Getting Started with Create React App
 
