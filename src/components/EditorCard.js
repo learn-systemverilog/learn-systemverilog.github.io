@@ -45,12 +45,9 @@ export default function EditorCard(props) {
     }
 
     function simulate() {
-        // TODO: We are assuming that the API is not verifying the token ID yet.
-        if (process.env.REACT_APP_IGNORE_OAUTH !== 'true') {
-            if (!props.user.isSignedIn) {
-                setIsModalOpen(true);
-                return;
-            }
+        if (!props.user.isSignedIn) {
+            setIsModalOpen(true);
+            return;
         }
 
         setIsTranspiling(true);
