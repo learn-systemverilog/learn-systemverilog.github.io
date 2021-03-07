@@ -12,6 +12,10 @@ export default function PageHeaderUser(props) {
         setIsOpen(isOpen);
     };
 
+    const onSelect = () => {
+        setIsOpen(false);
+    };
+
     const onSignInSuccess = (response) => {
         setUser(user => ({
             ...user,
@@ -81,6 +85,6 @@ export default function PageHeaderUser(props) {
     };
 
     return (
-        <Dropdown isPlain isOpen={isOpen} position="right" toggle={dropdownToggle} dropdownItems={dropdownItems()} />
+        <Dropdown isPlain position="right" isOpen={isOpen} onSelect={onSelect} toggle={dropdownToggle} dropdownItems={dropdownItems()} />
     );
 }
