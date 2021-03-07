@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Stack, StackItem } from '@patternfly/react-core';
+import { Button, PageHeaderToolsItem, Stack, StackItem } from '@patternfly/react-core';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTools } from '@patternfly/react-core';
+import { GithubIcon } from '@patternfly/react-icons';
 import SimulatorCard from "./components/SimulatorCard.js";
 import EditorCard from "./components/EditorCard.js";
 import ConsoleCard from "./components/ConsoleCard.js";
@@ -17,10 +18,19 @@ function App() {
     setLogs('');
   }
 
+  function githubOnClick() {
+    window.open("https://github.com/learn-systemverilog", "_blank");
+  }
+
   const Header = (
     <PageHeader logo="Learn SystemVerilog" headerTools={
       <PageHeaderTools>
-        <PageHeaderUser user={user} setUser={setUser} />
+        <PageHeaderToolsItem>
+          <Button variant="plain" aria-label="Github" onClick={githubOnClick}><GithubIcon /></Button>
+        </PageHeaderToolsItem>
+        <PageHeaderToolsItem>
+          <PageHeaderUser user={user} setUser={setUser} />
+        </PageHeaderToolsItem>
       </PageHeaderTools>
     } />
   );
