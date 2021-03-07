@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
 import { Dropdown, DropdownItem, DropdownToggle } from '@patternfly/react-core';
+import { GoogleIcon } from '@patternfly/react-icons';
 
 export default function PageHeaderUser(props) {
     const user = props.user;
@@ -73,7 +74,7 @@ export default function PageHeaderUser(props) {
     ];
 
     const dropdownItemsLoggedOut = [
-        <DropdownItem key="signin" onClick={signIn}>Sign in with Google</DropdownItem>
+        <DropdownItem key="signin" icon={<GoogleIcon />} onClick={signIn}>Sign in with Google</DropdownItem>
     ];
 
     const dropdownItems = () => {
