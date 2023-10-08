@@ -54,7 +54,7 @@ export default function EditorCard(props) {
 
         localStorage.setItem(localStorageLastSimulationCodeKey, code);
 
-        const url = new URL('/transpile', process.env.REACT_APP_API_URL);
+        const url = new URL('/test', process.env.REACT_APP_API_URL);
         url.searchParams.append('code', code);
 
         // TODO: It can be dangerous! Replace it with something else in the future.
