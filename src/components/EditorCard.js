@@ -60,8 +60,9 @@ export default function EditorCard(props) {
 
         sse.onopen = function () {
             log('[local]: Connected!');
+            log('[local]: Sending code...');
 
-            sse.send(JSON.stringify({code}));
+            sse.send(JSON.stringify({ action:'code', message:code }));
         }
 
         sse.onmessage = function(e) {
