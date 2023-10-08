@@ -86,12 +86,12 @@ export default function EditorCard(props) {
             log('[local]: Connection closed.');
         }
 
-        sse.onerror = function () {
+        sse.onerror = function (e) {
             sse.close();
 
             setIsTranspiling(false);
 
-            log('[local]: Connection closed.');
+            log(`[local]: Connection error: ${e}.`);
         }
     }
 
