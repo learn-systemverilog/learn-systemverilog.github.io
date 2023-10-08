@@ -54,44 +54,37 @@ export default function EditorCard(props) {
 
         localStorage.setItem(localStorageLastSimulationCodeKey, code);
 
-        const url = new URL('/test', process.env.REACT_APP_API_URL);
-        url.searchParams.append('code', code);
-
-        // TODO: It can be dangerous! Replace it with something else in the future.
-        url.searchParams.append('tokenId', props.user.tokenId);
-
-        let sse = new EventSource(url.href);
+        let tempCode = '';
+        let sse = new WebSocket(process.env.REACT_APP_API_URL);
         log('[local]: Connecting...');
 
         sse.onopen = function () {
             log('[local]: Connected!');
+
+            sse.send(JSON.stringify({code}));
         }
 
-        sse.addEventListener('internal', e => {
+        sse.onmessage = function(e) {
             const data = JSON.parse(e.data);
 
-            log(`[internal][${data.severity}]: ` + data.message);
-        });
+            if (data.action === 'output') {
+                tempCode += data.message;
+            } else if (data.action === 'output-finished') {
+                props.setTranspiledCode(tempCode);
 
-        sse.addEventListener('stdout', e => {
-            const data = JSON.parse(e.data);
+                log('[local]: Success! Check the simulator to see the results.');
+            } else {
+                log(`[${data.action}]: ` + data.message);
+            }
+        };
 
-            log('[stdout]: ' + data.stdout);
-        });
+        sse.onclose = function () {
+            sse.close();
 
-        sse.addEventListener('stderr', e => {
-            const data = JSON.parse(e.data);
+            setIsTranspiling(false);
 
-            log('[stderr]: ' + data.stderr);
-        });
-
-        sse.addEventListener('output', e => {
-            const data = JSON.parse(e.data);
-
-            props.setTranspiledCode(data);
-
-            log('[local]: Success! Check the simulator to see the results.');
-        });
+            log('[local]: Connection closed.');
+        }
 
         sse.onerror = function () {
             sse.close();
