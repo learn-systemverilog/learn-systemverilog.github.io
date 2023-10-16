@@ -62,7 +62,7 @@ export default function EditorCard(props) {
             log('[local]: Connected!');
             log('[local]: Sending code...');
 
-            sse.send(JSON.stringify({ action:'code', message:code }));
+            sse.send(JSON.stringify({ action:'transpile', message:code }));
         }
 
         sse.onmessage = function(e) {
