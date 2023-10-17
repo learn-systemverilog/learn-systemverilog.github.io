@@ -75,7 +75,11 @@ export default function EditorCard(props) {
 
                 log('[local]: Success! Check the simulator to see the results.');
             } else {
-                log(`[${data.action}]: ` + data.message);
+                const message = data.message.endsWith('\n')
+                ? data.message.slice(0, -1)
+                : data.message;
+
+                log(`[${data.action}]: ` + message);
             }
         };
 
